@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "jsx": "react",
+        "declaration": true,
+        "sourceMap": true,
+        "removeComments": true,
+        "noImplicitAny": false,
+        "experimentalDecorators": true,
+        "outDir": "dist",
+        "lib": ["es2017", "dom"]
+    },
+    "include": [
+        "src/index.ts"
+    ]
+}

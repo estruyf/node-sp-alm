@@ -1,0 +1,84 @@
+defaults: &defaults
+  working_directory: ~/node-sp-alm
+  docker:
+    - image: circleci/node:6.11.5
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/node-sp-alm
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Restore dependencies
+          command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: build
+          command: npm run tsc
+      - persist_to_workspace:
+          root: .
+          paths: .
+  publish_next:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/node-sp-alm
+      - run:
+          name: Write .npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Stamp beta to package version
+          command: node scripts/update-package-version.js $CIRCLE_SHA1
+      - run:
+          name: Publish @next
+          command: npm publish --tag next --access public
+  publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/node-sp-alm
+      - run:
+          name: Write .npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Publish
+          command: npm publish --access public
+
+workflows:
+  version: 2
+  release_next:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: dev
+      - publish_next:
+          requires:
+            - build
+          filters:
+            branches:
+              only: dev
+  release:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+      - publish:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/

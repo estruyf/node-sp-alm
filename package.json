@@ -1,0 +1,39 @@
+{
+  "name": "node-sp-alm",
+  "version": "1.0.0",
+  "description": "This node/gulp plugin that allows you to automate your add-in / SPFx deployment and installation",
+  "main": "dist/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "tsc && tsc ./test/index.ts --sourceMap true --lib es2017 && node ./test/index.js"
+  },
+  "keywords": [
+    "SharePoint",
+    "Framework",
+    "SPFx",
+    "Gulp",
+    "Add-in"
+  ],
+  "author": "Elio Struyf",
+  "license": "MIT",
+  "dependencies": {
+    "node-sp-auth": "2.2.9"
+  },
+  "devDependencies": {
+    "typescript": "2.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/estruyf/node-sp-alm"
+  },
+  "bugs": {
+    "url": "https://github.com/estruyf/node-sp-alm/issues"
+  },
+  "homepage": "https://github.com/estruyf/node-sp-alm",
+  "maintainers": [
+    {
+      "name": "Elio Struyf",
+      "email": "info@estruyf.be"
+    }
+  ]
+}
