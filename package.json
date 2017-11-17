@@ -17,9 +17,11 @@
   "author": "Elio Struyf",
   "license": "MIT",
   "dependencies": {
-    "node-sp-auth": "2.2.9"
+    "node-sp-auth": "2.2.9",
+    "request": "2.83.0"
   },
   "devDependencies": {
+    "@types/request": "2.0.8",
     "typescript": "2.4.2"
   },
   "repository": {
