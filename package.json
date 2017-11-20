@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
+    "tsc:test": "tsc && tsc ./test/index.ts --sourceMap true --lib es2017",
     "test": "tsc && tsc ./test/index.ts --sourceMap true --lib es2017 && node ./test/index.js"
   },
   "keywords": [
@@ -17,6 +18,7 @@
   "author": "Elio Struyf",
   "license": "MIT",
   "dependencies": {
+    "applicationinsights": "1.0.0",
     "node-sp-auth": "2.2.9",
     "request": "2.83.0"
   },
