@@ -1,6 +1,7 @@
 import { IAppList, IAppMetadata } from './IAppMetadata';
 import { IOptions } from './../utils/IAlmTasks';
 import AuthHelper from '../helper/authHelper';
+import AppCatalog from '../helper/appCatalog';
 import appInsights from '../helper/appInsights';
 import * as request from 'request';
 
@@ -8,13 +9,16 @@ import * as request from 'request';
  * Function to list all available apps
  * @param options 
  */
-export async function list(options: IOptions): Promise<IAppMetadata[]> {
+export async function list(options: IOptions, useAppCatalog: boolean = true): Promise<IAppMetadata[]> {
   appInsights.trackEvent({
     name: 'list'
   });
 
   const headers = await AuthHelper.getRequestHeaders(options);
-  const siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/${options.site}`;
+  let siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/${options.site}`;
+  if (useAppCatalog) {
+    siteUrl = await AppCatalog.get(options);
+  }
   const restUrl = `${siteUrl}/_api/web/tenantappcatalog/AvailableApps`;
 
   return new Promise<IAppMetadata[]>((resolve, reject) => {
@@ -38,6 +42,9 @@ export async function list(options: IOptions): Promise<IAppMetadata[]> {
         return;
       }
 
+      if (options.verbose) {
+        console.log('INFO: Available apps successfully retrieved.');
+      }
       // Return the apps
       resolve(data.value);
     });

@@ -39,29 +39,29 @@ export default class NodeSPAlm {
   /**
   * List available packages from app catalog
   */
-  public async list(): Promise<IAppMetadata[]> {
-    return await actions.list(this._internalOptions);
+  public async list(useAppCatalog: boolean = true): Promise<IAppMetadata[]> {
+    return await actions.list(this._internalOptions, useAppCatalog);
   }
   
   /**
   * Details on individual solution package from app catalog
   */
-  public async appDetails(pkgId: string): Promise<IAppMetadata> {
-    return await actions.details(this._internalOptions, pkgId);
+  public async appDetails(pkgId: string, useAppCatalog: boolean = true): Promise<IAppMetadata> {
+    return await actions.details(this._internalOptions, pkgId, useAppCatalog);
   }
   
   /**
   * Add solution package to app catalog
   */
-  public async add(filename: string, contents: Buffer): Promise<IAddedApp> {
-    return await actions.add(this._internalOptions, filename, contents);
+  public async add(filename: string, contents: Buffer, useAppCatalog: boolean = true): Promise<IAddedApp> {
+    return await actions.add(this._internalOptions, filename, contents, useAppCatalog);
   }
   
   /**
   * Deploy solution package in app catalog
   */
-  public async deploy(pkgId: string, skipFeatureDeployment: boolean): Promise<boolean> {
-    return await actions.deploy(this._internalOptions, pkgId, skipFeatureDeployment);
+  public async deploy(pkgId: string, skipFeatureDeployment: boolean, useAppCatalog: boolean = true): Promise<boolean> {
+    return await actions.deploy(this._internalOptions, pkgId, skipFeatureDeployment, useAppCatalog);
   }
   
   /**
@@ -97,9 +97,9 @@ export default class NodeSPAlm {
   /**
   * Uninstall solution package from SharePoint site
   */
-  public async uinstall() {
+  public async uninstall() {
     appInsights.trackEvent({
-      name: 'uinstall'
+      name: 'uninstall'
     });
     console.log('uninstall - not yet implemented');
   }
