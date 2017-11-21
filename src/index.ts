@@ -8,7 +8,7 @@ import uuid4 from './helper/uuid4';
 import appInsights from './helper/appInsights';
 import * as actions from './actions';
 
-export class NodeSPAlm {
+export class ALM {
   private _internalOptions: IOptions = {};
   
   constructor(options: IOptions) {
