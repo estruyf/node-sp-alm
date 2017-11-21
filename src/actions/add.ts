@@ -19,7 +19,7 @@ export async function add(options: IOptions, filename: string, contents: Buffer,
   }
   // Check if the contents was specified
   if (!contents) {
-    throw "Filename argument is required";
+    throw "Contents argument is required";
   }
   
   appInsights.trackEvent({
