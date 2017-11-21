@@ -166,7 +166,6 @@ build.task('add-depoy-sppkg', {
     environmentInfo.username = config.args['username'] || environmentInfo.username;
     environmentInfo.password = config.args['password'] || environmentInfo.password;
     environmentInfo.tenant = config.args['tenant'] || environmentInfo.tenant;
-    environmentInfo.catalogSite = config.args['catalogsite'] || environmentInfo.catalogSite;
 
     return new Promise((resolve, reject) => {
       const pkgFile = require('./config/package-solution.json');
