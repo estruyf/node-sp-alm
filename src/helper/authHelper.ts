@@ -1,26 +1,31 @@
 import { IOptions } from './../utils/IAlmTasks';
 import * as request from "request";
 import * as spauth from 'node-sp-auth';
+import Logger from './logger';
+
+interface ICachedHeaders {
+  [url: string]: IHeaders
+}
+
+interface IHeaders {
+  [key: string]: any;
+}
 
 export default class AuthHelper {
-  private static _headers: { [key: string]: any; } = null;
+  private static _headers: ICachedHeaders = {};
   
   /**
   * Create request headers
   */
-  public static async getRequestHeaders(options: IOptions) {
-    return new Promise(async (resolve, reject) => {
-      if (AuthHelper._headers) {
-        if (options.verbose) {
-          console.log('INFO: Request headers already retrieved.');
-        }
-        resolve(AuthHelper._headers);
-        return;
-      }
-      
+  public static async getRequestHeaders(options: IOptions, siteUrl: string) {
+    return new Promise(async (resolve, reject) => {      
       try {
-        // Create the site URL
-        const siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/${options.site}`;
+        // Check if the request headers for the current site URL were already retrieved
+        if (typeof AuthHelper._headers[siteUrl] !== "undefined") {
+          Logger.info(`Request headers already retrieved for ${siteUrl}`)
+          resolve(AuthHelper._headers[siteUrl]);
+          return;
+        }
         
         // Specify the site credentials
         const credentials = {
@@ -41,10 +46,12 @@ export default class AuthHelper {
         // Add the digest value to the header
         headers["X-RequestDigest"] = digestValue;
         
-        AuthHelper._headers = headers;
+        // Cache the headers
+        AuthHelper._headers[siteUrl] = headers;
+        
         resolve(headers);
       } catch (e) {
-        console.log('ERROR:', e);
+        Logger.error(JSON.stringify(e));
         reject(e);
       }
     });
@@ -60,25 +67,19 @@ export default class AuthHelper {
       const apiUrl = `${siteUrl}/_api/contextinfo?$select=FormDigestValue`;
       request.post(apiUrl, { headers: headers }, (err, resp, body) => {
         if (err) {
-          if (verbose) {
-            console.log('ERROR:', err);
-          }
-          reject('Failed to retrieve the FormDigestValue value');
+          Logger.error(JSON.stringify(err));
+          reject(`Failed to retrieve the FormDigestValue value for ${siteUrl}`);
           return;
         }
         
         // Parse the text to JSON
         const result = JSON.parse(body);
         if (result.FormDigestValue) {
-          if (verbose) {
-            console.log('INFO: FormDigestValue retrieved');
-          }
+          Logger.info(`FormDigestValue retrieved for ${siteUrl}`);
           resolve(result.FormDigestValue);
         } else {
-          if (verbose) {
-            console.log('ERROR:', body);
-          }
-          reject('The FormDigestValue could not be retrieved');
+          Logger.error(JSON.stringify(body))
+          reject(`The FormDigestValue could not be retrieved for ${siteUrl}`);
         }
       });
     });

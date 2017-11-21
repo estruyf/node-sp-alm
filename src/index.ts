@@ -3,11 +3,12 @@ import { IOptions } from './utils/IAlmTasks';
 import * as fs from 'fs';
 import * as url from 'url';
 import AuthHelper from './helper/authHelper';
+import Logger from './helper/logger';
 import uuid4 from './helper/uuid4';
 import appInsights from './helper/appInsights';
 import * as actions from './actions';
 
-export default class NodeSPAlm {
+export class NodeSPAlm {
   private _internalOptions: IOptions = {};
   
   constructor(options: IOptions) {
@@ -34,6 +35,9 @@ export default class NodeSPAlm {
     this._internalOptions.absoluteUrl === "") {
       throw "Tenant OR absoluteUrl argument is required";
     }
+
+    // Set the verbose logging context
+    Logger.init(this._internalOptions.verbose);
   }
   
   /**

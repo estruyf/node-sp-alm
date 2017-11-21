@@ -2,6 +2,7 @@ import { ISearchResult, ICell, IRow } from './ISearchResult';
 import { IOptions } from '../utils/IAlmTasks';
 import AuthHelper from '../helper/authHelper';
 import * as request from 'request';
+import Logger from './logger';
 
 export default class AppCatalog {
   private static _url: string = "";
@@ -11,31 +12,27 @@ export default class AppCatalog {
   * Get the app catalog site of the current tenant
   */
   public static async get(options: IOptions): Promise<string> {
-    const headers = await AuthHelper.getRequestHeaders(options);
     const siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/`;
     const restUrl = `${siteUrl}/_api/search/query?querytext='${AppCatalog._query}'&selectproperties='Path'&clienttype='ContentSearchRegular'`;
+
+    // Get the headers to call the SharePoint Search API
+    const headers = await AuthHelper.getRequestHeaders(options, siteUrl);
 
     return new Promise<string>(async (resolve, reject) => {
       // Check if the AppCatalog URL was already retrieved
       if (AppCatalog._url) {
-        if (options.verbose) {
-          console.log('INFO: Site catalog URL already retrieved.');
-        }
+        Logger.info(`Site catalog URL already retrieved: ${AppCatalog._url}`);
         resolve(AppCatalog._url);
         return;
       }
 
-      if (options.verbose) {
-        console.log('INFO: Retrieving the App Catalog URL.');
-      }
+      Logger.info('Retrieving the App Catalog URL.');
       
       // Do a search query to retrieve the app catalog site
       request(restUrl, { headers }, (err, resp, body) => {
         // Check if there was an error
         if (err) {
-          if (options.verbose) {
-            console.log('ERROR:', err);
-          }
+          Logger.error(JSON.stringify(err));
           reject('Failed get the app catalog URL');
           return;
         }
@@ -43,9 +40,7 @@ export default class AppCatalog {
         const data: ISearchResult = JSON.parse(body);
         // Check if API returned an error
         if (data["odata.error"]) {
-          if (options.verbose) {
-            console.log('ERROR:', data["odata.error"]);
-          }
+          Logger.error(JSON.stringify(data["odata.error"]));
           reject('Failed get the app catalog URL');
           return;
         }
@@ -59,9 +54,7 @@ export default class AppCatalog {
                 if (rows.length > 0) {
                   const path: ICell = rows[0].Cells.find(cell => cell.Key.toLowerCase() === 'path');
 
-                  if (options.verbose) {
-                    console.log('INFO: App catalog URL retrieved.');
-                  }
+                  Logger.info('App catalog URL retrieved.');
 
                   AppCatalog._url = path.Value;
                   resolve(path.Value);
@@ -72,10 +65,7 @@ export default class AppCatalog {
           }
         }
 
-        if (options.verbose) {
-          console.log(`INFO: Didn't find the app catalog URL.`);
-        }
-
+        Logger.info(`Didn't find the app catalog URL.`);
         resolve("");
       });
     });
