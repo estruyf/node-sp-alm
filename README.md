@@ -158,8 +158,7 @@ const path = require('path');
 const environmentInfo = {
   "username": "",
   "password": "",
-  "tenant": "",
-  "catalogSite": ""
+  "tenant": ""
 }
 
 build.task('add-depoy-sppkg', {
