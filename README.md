@@ -152,8 +152,7 @@ This dependency can for example be used in your SharePoint Framework release pro
 
 ```javascript
 const sppkg = require('node-sp-alm');
-const fs = require('fs');
-const path = require('path');
+const through = require('through2');
 
 const environmentInfo = {
   "username": "",
@@ -168,11 +167,13 @@ build.task('add-depoy-sppkg', {
     environmentInfo.tenant = config.args['tenant'] || environmentInfo.tenant;
 
     return new Promise((resolve, reject) => {
+      // Retrieve the package solution file
       const pkgFile = require('./config/package-solution.json');
+      // Get the solution name from the package file
       const solutionFile = pkgFile.paths.zippedPackage;
       const fileLocation = `./sharepoint/${solutionFile}`;
+      // Retrieve the file name, this will be used for uploading the solution package to the app catalog
       const fileName = solutionFile.split('/').pop();
-      const fileContents = fs.readFileSync(path.join(__dirname, fileLocation));
       // Retrieve the skip feature deployment setting from the package solution config file
       const skipFeatureDeployment = pkgFile.solution.skipFeatureDeployment ? pkgFile.solution.skipFeatureDeployment : false;
 
@@ -180,17 +181,20 @@ build.task('add-depoy-sppkg', {
         "username": environmentInfo.username,
         "password": environmentInfo.password,
         "tenant": environmentInfo.tenant,
-        "verbose": false
+        "verbose": true
       });
-      // First add the SharePoint package
-      spAlm.add(fileName, fileContents).then(data => {
-        build.log('Solution package added');
-        // Deploy the SharePoint package based on the package ID
-        spAlm.deploy(data.UniqueId, skipFeatureDeployment).then(data => {
-          build.log('Solution package deployed');
-          resolve('DONE');
+
+      // Get the solution file and pass it to the ALM module
+      return gulp.src(fileLocation).pipe(through.obj((file, enc, cb) => {
+        spAlm.add(fileName, file.contents).then(data => {
+          build.log('Solution package added');
+          // Deploy the SharePoint package based on the package ID
+          spAlm.deploy(data.UniqueId, skipFeatureDeployment).then(data => {
+            build.log('Solution package deployed');
+            cb(null, file);
+          });
         });
-      });
+      })).on('finish', resolve);
     });
   }
 });
