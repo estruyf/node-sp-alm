@@ -11,7 +11,7 @@ export default class AppCatalog {
   /**
   * Get the app catalog site of the current tenant
   */
-  public static async get(options: IOptions): Promise<string> {
+  public static async get(options: IOptions, useAppCatalog: boolean): Promise<string> {
     const siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/`;
     const restUrl = `${siteUrl}/_api/search/query?querytext='${AppCatalog._query}'&selectproperties='Path'&clienttype='ContentSearchRegular'`;
 
@@ -19,6 +19,12 @@ export default class AppCatalog {
     const headers = await AuthHelper.getRequestHeaders(options, siteUrl);
 
     return new Promise<string>(async (resolve, reject) => {
+      // Check if the absolute URL needs to be used
+      if (!useAppCatalog) {
+        resolve(siteUrl);
+        return;
+      }
+
       // Check if the AppCatalog URL was already retrieved
       if (AppCatalog._url) {
         Logger.info(`Site catalog URL already retrieved: ${AppCatalog._url}`);

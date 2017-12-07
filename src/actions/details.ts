@@ -24,10 +24,7 @@ export async function details(options: IOptions, pkgId: string, useAppCatalog: b
   Logger.info('Starting to retrieve app details');
   
   // Get the site URL
-  let siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/${options.site}`;
-  if (useAppCatalog) {
-    siteUrl = await AppCatalog.get(options);
-  }
+  const siteUrl = await AppCatalog.get(options, useAppCatalog);
   
   // Retrieve the headers for the API calls
   const headers = await AuthHelper.getRequestHeaders(options, siteUrl);

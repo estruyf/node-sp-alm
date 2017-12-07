@@ -18,10 +18,7 @@ export async function list(options: IOptions, useAppCatalog: boolean = true): Pr
   Logger.info('Starting to retrieve available apps.');
 
   // Get the site URL
-  let siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/${options.site}`;
-  if (useAppCatalog) {
-    siteUrl = await AppCatalog.get(options);
-  }
+  const siteUrl = await AppCatalog.get(options, useAppCatalog);
 
   // Retrieve the headers for the API calls
   const headers = await AuthHelper.getRequestHeaders(options, siteUrl);

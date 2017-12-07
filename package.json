@@ -1,6 +1,6 @@
 {
   "name": "node-sp-alm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This node/gulp plugin that allows you to automate your add-in / SPFx deployment and installation",
   "main": "dist/index.js",
   "scripts": {

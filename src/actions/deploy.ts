@@ -24,10 +24,7 @@ export async function deploy(options: IOptions, pkgId: string, skipFeatureDeploy
   Logger.info('Starting to deploy solution package.');
   
   // Get the site URL
-  let siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/${options.site}`;
-  if (useAppCatalog) {
-    siteUrl = await AppCatalog.get(options);
-  }
+  const siteUrl = await AppCatalog.get(options, useAppCatalog);
   
   // Retrieve the headers for the API calls
   const headers = await AuthHelper.getRequestHeaders(options, siteUrl);
