@@ -117,4 +117,15 @@ export class ALM {
     });
     console.log('upgrade - not yet implemented');
   }
+
+  /**
+   * List available site collection app catalogs
+   */
+  public async siteCollectionAppCatalogsSites() {
+    // _api/web/tenantappcatalog/SiteCollectionAppCatalogsSites
+    appInsights.trackEvent({
+      name: 'siteCollectionAppCatalogsSites'
+    });
+    console.log('upgrade - not yet implemented');
+  }
 }

@@ -37,7 +37,7 @@ const fileContent = fs.readFileSync(path.join(__dirname, `./${fileName}`));
 const appData = await spAlm.add(fileName, fileContent);
 console.log('Solution package added');
 // Deploy the SharePoint package based on the package ID
-await spAlm.deploy(data.UniqueId, skipFeatureDeployment)
+await spAlm.deploy(appData.UniqueId, skipFeatureDeployment)
 console.log('Solution package deployed');
 ```
 
