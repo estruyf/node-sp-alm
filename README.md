@@ -96,6 +96,30 @@ Arguments:
 
 > More information about the **skipFeatureDeployment** option can be found here: [Tenant-Scoped solution deployment for SharePoint Framework solutions](https://dev.office.com/sharepoint/docs/spfx/tenant-scoped-deployment).
 
+### Action: retract
+
+Retracts the solution package.
+
+```
+spAlm.retract(pkgId)
+```
+
+Arguments:
+1. Package ID
+1. Use the tenant app catalog (not required - default: true)
+
+### Action: remove
+
+Removed the solution package.
+
+```
+spAlm.remove(pkgId)
+```
+
+Arguments:
+1. Package ID
+1. Use the tenant app catalog (not required - default: true)
+
 ## Arguments / options
 
 The following arguments / options can be passed for deploying the package.
