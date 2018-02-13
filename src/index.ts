@@ -78,11 +78,8 @@ export class ALM {
   /**
   * Remove solution package from app catalog
   */
-  public async remove() {
-    appInsights.trackEvent({
-      name: 'remove'
-    });
-    console.log('remove - not yet implemented');
+  public async remove(pkgId: string, useAppCatalog: boolean = true): Promise<boolean> {
+    return await actions.remove(this._internalOptions, pkgId, useAppCatalog);
   }
   
   /**
