@@ -1,5 +1,5 @@
 import { IOptions } from './../utils/IAlmTasks';
-import { IAddedApp } from './IAppMetadata';
+import { IAddedApp } from '../utils/IAppMetadata';
 import AuthHelper from '../helper/authHelper';
 import appInsights from '../helper/appInsights';
 import * as request from 'request';

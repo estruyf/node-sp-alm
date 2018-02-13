@@ -1,4 +1,4 @@
-import { IAppMetadata } from './IAppMetadata';
+import { IAppMetadata } from '../utils/IAppMetadata';
 import { IOptions } from './../utils/IAlmTasks';
 import AuthHelper from '../helper/authHelper';
 import Logger from '../helper/logger';

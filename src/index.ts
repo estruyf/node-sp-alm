@@ -1,4 +1,4 @@
-import { IAppMetadata, IAddedApp } from './actions/IAppMetadata';
+import { IAppMetadata, IAddedApp } from './utils/IAppMetadata';
 import { IOptions } from './utils/IAlmTasks';
 import * as fs from 'fs';
 import * as url from 'url';
@@ -71,11 +71,8 @@ export class ALM {
   /**
   * Retract solution package in app catalog
   */
-  public async retract() {
-    appInsights.trackEvent({
-      name: 'retract'
-    });
-    console.log('retract - not yet implemented');
+  public async retract(pkgId: string, useAppCatalog: boolean = true): Promise<boolean> {
+    return await actions.retract(this._internalOptions, pkgId, useAppCatalog);
   }
   
   /**
