@@ -120,6 +120,62 @@ Arguments:
 1. Package ID
 1. Use the tenant app catalog (not required - default: true)
 
+### Action: install
+
+Installs the solution package to the site.
+
+```
+spAlm.install(pkgId)
+```
+
+Arguments:
+1. Package ID
+
+### Action: uninstall
+
+Uninstalls the solution package from the site.
+
+```
+spAlm.uninstall(pkgId)
+```
+
+Arguments:
+1. Package ID
+
+### Action: upgrade
+
+Upgrades the solution package on the site.
+
+```
+spAlm.upgrade(pkgId)
+```
+
+Arguments:
+1. Package ID
+
+### Action: getCatalogSites
+
+Retrieve all available app catalog sites.
+
+```
+spAlm.getCatalogSites()
+```
+
+This returns the following object:
+
+```
+{
+  'odata.metadata': string;
+  value: [{
+    'odata.type': string;
+    'odata.id': string;
+    'odata.editLink': string;
+    AbsoluteUrl: string;
+    SiteID: string;
+  }]
+}
+```
+
 ## Arguments / options
 
 The following arguments / options can be passed for deploying the package.
@@ -159,7 +215,7 @@ Specify the relative path to the app catalog site. Example: "sites/catalog"
 Type: `String`
 Default: `""`
 
-Sets the absoluteUrl to the app catalog site that needs to be used for the deployment. Example: `https://tenant.sharepoint.com/sites/catalog`.
+Sets the `absoluteUrl` to the app catalog site that needs to be used for the deployment. Example: `https://tenant.sharepoint.com/sites/catalog`.
 
 > Important: You have to specify this property or the combination **tenant** and **site** property.
 

@@ -4,23 +4,23 @@ import Logger from '../helper/logger';
 import BaseRequester from '../helper/baseRequester';
 
 /**
-* Function to remove the solution package
+* Function to upgrade the solution package
 * @param options 
 * @param pkgId 
 * @param useAppCatalog 
 */
-export async function remove(options: IOptions, pkgId: string, useAppCatalog: boolean = true): Promise<boolean> {
+export async function upgrade(options: IOptions, pkgId: string): Promise<boolean> {
   // Check if the package ID was specified
   if (!pkgId) {
     throw "Package ID (pkgId) argument is required";
   }
   
   appInsights.trackEvent({
-    name: 'remove'
+    name: 'upgrade'
   });
   
-  Logger.info('Starting to remove solution package.');
+  Logger.info('Starting to upgrade solution package.');
   
-  // Do the remove call
-  return BaseRequester.post('Remove', pkgId, options, useAppCatalog);
+  // Do the upgrade call
+  return BaseRequester.post('Upgrade', pkgId, options, false);
 }

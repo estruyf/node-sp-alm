@@ -1,9 +1,9 @@
-interface ISiteCollectionAppCatalogsSites {
+export interface ISiteCollectionAppCatalogsSites {
   'odata.metadata': string;
   value: Value[];
 }
 
-interface Value {
+export interface Value {
   'odata.type': string;
   'odata.id': string;
   'odata.editLink': string;
