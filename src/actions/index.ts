@@ -7,3 +7,4 @@ export * from './remove';
 export * from './install';
 export * from './uninstall';
 export * from './upgrade';
+export * from './getCatalogSites';

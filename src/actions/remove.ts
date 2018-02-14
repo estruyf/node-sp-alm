@@ -4,7 +4,7 @@ import Logger from '../helper/logger';
 import BaseRequester from '../helper/baseRequester';
 
 /**
-* Function to retract the solution package
+* Function to remove the solution package
 * @param options 
 * @param pkgId 
 * @param useAppCatalog 

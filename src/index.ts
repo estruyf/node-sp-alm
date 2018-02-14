@@ -7,6 +7,7 @@ import Logger from './helper/logger';
 import uuid4 from './helper/uuid4';
 import appInsights from './helper/appInsights';
 import * as actions from './actions';
+import { ISiteCollectionAppCatalogsSites } from './utils/ISiteCollectionAppCatalogsSites';
 
 export class ALM {
   private _internalOptions: IOptions = {};
@@ -85,32 +86,28 @@ export class ALM {
   /**
   * Install solution package from app catalog to SharePoint site
   */
-  public async install(pkgId: string) {
+  public async install(pkgId: string): Promise<boolean> {
     return await actions.install(this._internalOptions, pkgId);
   }
   
   /**
   * Uninstall solution package from SharePoint site
   */
-  public async uninstall(pkgId: string) {
+  public async uninstall(pkgId: string): Promise<boolean> {
     return await actions.uninstall(this._internalOptions, pkgId);
   }
   
   /**
   * Upgrade solution package in SharePoint site
   */
-  public async upgrade(pkgId: string) {
+  public async upgrade(pkgId: string): Promise<boolean> {
     return await actions.upgrade(this._internalOptions, pkgId);
   }
 
   /**
    * List available site collection app catalogs
    */
-  public async siteCollectionAppCatalogsSites() {
-    // _api/web/tenantappcatalog/SiteCollectionAppCatalogsSites
-    appInsights.trackEvent({
-      name: 'siteCollectionAppCatalogsSites'
-    });
-    console.log('upgrade - not yet implemented');
+  public async getCatalogSites(): Promise<ISiteCollectionAppCatalogsSites> {
+    return await actions.getCatalogSites(this._internalOptions);
   }
 }

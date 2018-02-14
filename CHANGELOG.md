@@ -4,6 +4,7 @@
 - Install action added
 - Uninstall action added
 - Upgrade action added
+- getCatalogSites action added
 
 ## 1.1.0
 - Retract action added

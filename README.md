@@ -153,6 +153,29 @@ spAlm.upgrade(pkgId)
 Arguments:
 1. Package ID
 
+### Action: getCatalogSites
+
+Retrieve all available app catalog sites.
+
+```
+spAlm.getCatalogSites()
+```
+
+This returns the following object:
+
+```
+{
+  'odata.metadata': string;
+  value: [{
+    'odata.type': string;
+    'odata.id': string;
+    'odata.editLink': string;
+    AbsoluteUrl: string;
+    SiteID: string;
+  }]
+}
+```
+
 ## Arguments / options
 
 The following arguments / options can be passed for deploying the package.
@@ -192,7 +215,7 @@ Specify the relative path to the app catalog site. Example: "sites/catalog"
 Type: `String`
 Default: `""`
 
-Sets the absoluteUrl to the app catalog site that needs to be used for the deployment. Example: `https://tenant.sharepoint.com/sites/catalog`.
+Sets the `absoluteUrl` to the app catalog site that needs to be used for the deployment. Example: `https://tenant.sharepoint.com/sites/catalog`.
 
 > Important: You have to specify this property or the combination **tenant** and **site** property.
 
@@ -217,7 +240,7 @@ const environmentInfo = {
   "tenant": ""
 }
 
-build.task('add-depoy-sppkg', {
+build.task('add-deploy-sppkg', {
   execute: (config) => {
     environmentInfo.username = config.args['username'] || environmentInfo.username;
     environmentInfo.password = config.args['password'] || environmentInfo.password;
@@ -257,7 +280,7 @@ build.task('add-depoy-sppkg', {
 });
 ```
 
-Once this task is in place, you can run it with: `gulp add-depoy-sppkg` or `gulp add-depoy-sppkg --username "your-username" --password "your-password" --tenant "your-tenant"`.
+Once this task is in place, you can run it with: `gulp add-deploy-sppkg` or `gulp add-deploy-sppkg --username "your-username" --password "your-password" --tenant "your-tenant"`.
 
 > More information about using arguments in SPFx gulp tasks can be found here: [Passing arguments with custom Gulp tasks for SharePoint Framework projects](https://www.eliostruyf.com/passing-arguments-with-custom-gulp-tasks-for-sharepoint-framework-projects/).
 
