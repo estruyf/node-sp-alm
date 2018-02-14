@@ -120,6 +120,39 @@ Arguments:
 1. Package ID
 1. Use the tenant app catalog (not required - default: true)
 
+### Action: install
+
+Installs the solution package to the site.
+
+```
+spAlm.install(pkgId)
+```
+
+Arguments:
+1. Package ID
+
+### Action: uninstall
+
+Uninstalls the solution package from the site.
+
+```
+spAlm.uninstall(pkgId)
+```
+
+Arguments:
+1. Package ID
+
+### Action: upgrade
+
+Upgrades the solution package on the site.
+
+```
+spAlm.upgrade(pkgId)
+```
+
+Arguments:
+1. Package ID
+
 ## Arguments / options
 
 The following arguments / options can be passed for deploying the package.

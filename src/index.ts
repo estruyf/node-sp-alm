@@ -85,31 +85,22 @@ export class ALM {
   /**
   * Install solution package from app catalog to SharePoint site
   */
-  public async install() {
-    appInsights.trackEvent({
-      name: 'install'
-    });
-    console.log('install - not yet implemented');
+  public async install(pkgId: string) {
+    return await actions.install(this._internalOptions, pkgId);
   }
   
   /**
   * Uninstall solution package from SharePoint site
   */
-  public async uninstall() {
-    appInsights.trackEvent({
-      name: 'uninstall'
-    });
-    console.log('uninstall - not yet implemented');
+  public async uninstall(pkgId: string) {
+    return await actions.uninstall(this._internalOptions, pkgId);
   }
   
   /**
   * Upgrade solution package in SharePoint site
   */
-  public async upgrade() {
-    appInsights.trackEvent({
-      name: 'upgrade'
-    });
-    console.log('upgrade - not yet implemented');
+  public async upgrade(pkgId: string) {
+    return await actions.upgrade(this._internalOptions, pkgId);
   }
 
   /**
