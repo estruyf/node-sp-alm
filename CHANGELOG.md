@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.2.1
+
+- Telemetry optimizations
+
 ## 1.2.0
 - Install action added
 - Uninstall action added
