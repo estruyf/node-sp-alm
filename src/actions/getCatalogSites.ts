@@ -29,6 +29,8 @@ export async function getCatalogSites(options: IOptions): Promise<ISiteCollectio
   const restUrl = `${siteUrl}/_api/web/tenantappcatalog/SiteCollectionAppCatalogsSites`;
   
   return new Promise<ISiteCollectionAppCatalogsSites>((resolve, reject) => {
+    Logger.info(`Calling the following API: ${restUrl}`);
+    
     request(restUrl, { headers }, (err, resp, body) => {
       // Check if there was an error
       if (err) {

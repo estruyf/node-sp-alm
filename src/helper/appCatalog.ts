@@ -13,7 +13,7 @@ export default class AppCatalog {
   */
   public static async get(options: IOptions, useAppCatalog: boolean): Promise<string> {
     const siteUrl = options.absoluteUrl ? options.absoluteUrl : `https://${options.tenant}.sharepoint.com/`;
-    const restUrl = `${siteUrl}/_api/search/query?querytext='${AppCatalog._query}'&selectproperties='Path'&clienttype='ContentSearchRegular'`;
+    const restUrl = `${siteUrl}/_api/search/query?querytext='${AppCatalog._query}'&selectproperties='Path'`;
 
     // Get the headers to call the SharePoint Search API
     const headers = await AuthHelper.getRequestHeaders(options, siteUrl);

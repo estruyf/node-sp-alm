@@ -30,9 +30,11 @@ export async function details(options: IOptions, pkgId: string, useAppCatalog: b
   const headers = await AuthHelper.getRequestHeaders(options, siteUrl);
   
   // Create the rest API URL
-  const restUrl = `${siteUrl}/_api/web/tenantappcatalog/AvailableApps/GetById('${pkgId}')`;
+  const restUrl = `${siteUrl}/_api/web/${useAppCatalog ? "tenantappcatalog" : "SiteCollectionAppCatalog"}/AvailableApps/GetById('${pkgId}')`;
   
   return new Promise<IAppMetadata>((resolve, reject) => {
+    Logger.info(`Calling the following API: ${restUrl}`);
+
     request(restUrl, { headers }, (err, resp, body) => {
       // Check if there was an error
       if (err) {

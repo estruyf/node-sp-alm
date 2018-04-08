@@ -12,7 +12,7 @@ import Logger from '../helper/logger';
 * @param filename File name
 * @param contents File contents
 */
-export async function add(options: IOptions, filename: string, contents: Buffer, useAppCatalog: boolean = true): Promise<IAddedApp> {
+export async function add(options: IOptions, filename: string, contents: Buffer, overwrite, useAppCatalog: boolean = true): Promise<IAddedApp> {
   // Check if the filename was specified
   if (!filename) {
     throw "Filename argument is required";
@@ -37,9 +37,11 @@ export async function add(options: IOptions, filename: string, contents: Buffer,
   headers["binaryStringRequestBody"] = true;
   
   // Create the rest API URL
-  const restUrl = `${siteUrl}/_api/web/tenantappcatalog/Add(overwrite=true, url='${filename}')`;
+  const restUrl = `${siteUrl}/_api/web/${useAppCatalog ? "tenantappcatalog" : "SiteCollectionAppCatalog"}/Add(overwrite=${overwrite}, url='${filename}')`;
   
   return new Promise<IAddedApp>((resolve, reject) => {
+    Logger.info(`Calling the following API: ${restUrl}`);
+
     request.post(restUrl, { headers, body: contents }, (err, resp, body) => {
       // Check if there was an error
       if (err) {

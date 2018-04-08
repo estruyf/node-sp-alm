@@ -51,10 +51,14 @@ List returns the available apps.
 
 ```
 spAlm.list()
+
+// OR 
+
+spAlm.list(false)
 ```
 
 Arguments:
-1. Use the tenant app catalog (not required - default: true)
+1. Use the tenant app catalog or site-collection app catalog (not required - default: true -> uses the tenant app catalog)
 
 ### Action: appDetails
 
@@ -62,11 +66,15 @@ Returns information about the provided solution package ID.
 
 ```
 spAlm.appDetails("00000000-0000-0000-0000-000000000000");
+
+// OR
+
+spAlm.appDetails("00000000-0000-0000-0000-000000000000", false);
 ```
 
 Arguments:
 1. Package ID
-1. Use the tenant app catalog (not required - default: true)
+1. Use the tenant app catalog or site-collection app catalog (not required - default: true -> uses the tenant app catalog)
 
 ### Action: add 
 
@@ -74,12 +82,17 @@ Adds the provided solution package to the app catalog.
 
 ```
 spAlm.add(fileName, fileContent);
+
+// OR 
+
+spAlm.add(fileName, fileContent, true, false);
 ```
 
 Arguments:
 1. File name
 1. File contents (Buffer)
-1. Use the tenant app catalog (not required - default: true)
+1. Overwrite file in app catalog (not required - default: true)
+1. Use the tenant app catalog or site-collection app catalog (not required - default: true -> uses the tenant app catalog)
 
 ### Action: deploy
 
@@ -87,12 +100,16 @@ Deploys the previously added solution package.
 
 ```
 deploy.deploy(pkgId, true)
+
+// OR
+
+deploy.deploy(pkgId, true, false)
 ```
 
 Arguments:
 1. Package ID
 1. Skip feature deployment
-1. Use the tenant app catalog (not required - default: true)
+1. Use the tenant app catalog or site-collection app catalog (not required - default: true -> uses the tenant app catalog)
 
 > More information about the **skipFeatureDeployment** option can be found here: [Tenant-Scoped solution deployment for SharePoint Framework solutions](https://dev.office.com/sharepoint/docs/spfx/tenant-scoped-deployment).
 
@@ -102,11 +119,15 @@ Retracts the solution package.
 
 ```
 spAlm.retract(pkgId)
+
+// OR
+
+spAlm.retract(pkgId, false)
 ```
 
 Arguments:
 1. Package ID
-1. Use the tenant app catalog (not required - default: true)
+1. Use the tenant app catalog or site-collection app catalog (not required - default: true -> uses the tenant app catalog)
 
 ### Action: remove
 
@@ -114,11 +135,15 @@ Removed the solution package.
 
 ```
 spAlm.remove(pkgId)
+
+// OR
+
+spAlm.remove(pkgId, false)
 ```
 
 Arguments:
 1. Package ID
-1. Use the tenant app catalog (not required - default: true)
+1. Use the tenant app catalog or site-collection app catalog (not required - default: true -> uses the tenant app catalog)
 
 ### Action: install
 

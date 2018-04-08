@@ -5,7 +5,7 @@
         "jsx": "react",
         "declaration": true,
         "sourceMap": true,
-        "removeComments": true,
+        "removeComments": false,
         "noImplicitAny": false,
         "experimentalDecorators": true,
         "outDir": "dist",

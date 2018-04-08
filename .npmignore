@@ -14,3 +14,4 @@ scripts
 .gitignore
 tsconfig.json
 yarn.lock
+.DS_Store
