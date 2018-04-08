@@ -61,3 +61,4 @@ typings/
 test
 *.lock
 dist
+.DS_Store

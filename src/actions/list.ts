@@ -24,9 +24,11 @@ export async function list(options: IOptions, useAppCatalog: boolean = true): Pr
   const headers = await AuthHelper.getRequestHeaders(options, siteUrl);
 
   // Create the rest API URL
-  const restUrl = `${siteUrl}/_api/web/tenantappcatalog/AvailableApps`;
+  const restUrl = `${siteUrl}/_api/web/${useAppCatalog ? "tenantappcatalog" : "SiteCollectionAppCatalog"}/AvailableApps`;
 
   return new Promise<IAppMetadata[]>((resolve, reject) => {
+    Logger.info(`Calling the following API: ${restUrl}`);
+
     request.post(restUrl, { headers }, (err, resp, body) => {
       // Check if there was an error
       if (err) {

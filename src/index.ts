@@ -42,64 +42,81 @@ export class ALM {
   }
   
   /**
-  * List available packages from app catalog
-  */
+   * List available packages from app catalog
+   * @param useAppCatalog Default: true
+   */
   public async list(useAppCatalog: boolean = true): Promise<IAppMetadata[]> {
     return await actions.list(this._internalOptions, useAppCatalog);
   }
   
   /**
-  * Details on individual solution package from app catalog
-  */
+   * Details on individual solution package from app catalog
+   * @param pkgId Provide the GUID of the solution 
+   * @param useAppCatalog Default: true 
+   */
   public async appDetails(pkgId: string, useAppCatalog: boolean = true): Promise<IAppMetadata> {
     return await actions.details(this._internalOptions, pkgId, useAppCatalog);
   }
   
   /**
-  * Add solution package to app catalog
-  */
-  public async add(filename: string, contents: Buffer, useAppCatalog: boolean = true): Promise<IAddedApp> {
-    return await actions.add(this._internalOptions, filename, contents, useAppCatalog);
+   * Add solution package to app catalog
+   * @param filename Provide the filename
+   * @param contents Provide the file contents
+   * @param overwrite Default: true
+   * @param useAppCatalog Default: true
+   */
+  public async add(filename: string, contents: Buffer, overwrite: boolean = true, useAppCatalog: boolean = true): Promise<IAddedApp> {
+    return await actions.add(this._internalOptions, filename, contents, overwrite, useAppCatalog);
   }
   
   /**
-  * Deploy solution package in app catalog
-  */
+   * Deploy solution package in app catalog
+   * @param pkgId Provide the GUID of the solution 
+   * @param skipFeatureDeployment Specify if you want to skip feature deployment 
+   * @param useAppCatalog Default: true
+   */
   public async deploy(pkgId: string, skipFeatureDeployment: boolean, useAppCatalog: boolean = true): Promise<boolean> {
     return await actions.deploy(this._internalOptions, pkgId, skipFeatureDeployment, useAppCatalog);
   }
   
   /**
-  * Retract solution package in app catalog
-  */
+   * Retract solution package in app catalog
+   * @param pkgId Provide the GUID of the solution 
+   * @param useAppCatalog Default: true
+   */
   public async retract(pkgId: string, useAppCatalog: boolean = true): Promise<boolean> {
     return await actions.retract(this._internalOptions, pkgId, useAppCatalog);
   }
   
   /**
-  * Remove solution package from app catalog
-  */
+   * Remove solution package from app catalog
+   * @param pkgId Provide the GUID of the solution 
+   * @param useAppCatalog Default: true
+   */
   public async remove(pkgId: string, useAppCatalog: boolean = true): Promise<boolean> {
     return await actions.remove(this._internalOptions, pkgId, useAppCatalog);
   }
   
   /**
-  * Install solution package from app catalog to SharePoint site
-  */
+   * Install solution package from app catalog to SharePoint site
+   * @param pkgId Provide the GUID of the solution 
+   */
   public async install(pkgId: string): Promise<boolean> {
     return await actions.install(this._internalOptions, pkgId);
   }
   
   /**
-  * Uninstall solution package from SharePoint site
-  */
+   * Uninstall solution package from SharePoint site
+   * @param pkgId Provide the GUID of the solution 
+   */
   public async uninstall(pkgId: string): Promise<boolean> {
     return await actions.uninstall(this._internalOptions, pkgId);
   }
   
   /**
-  * Upgrade solution package in SharePoint site
-  */
+   * Upgrade solution package in SharePoint site
+   * @param pkgId Provide the GUID of the solution
+   */
   public async upgrade(pkgId: string): Promise<boolean> {
     return await actions.upgrade(this._internalOptions, pkgId);
   }

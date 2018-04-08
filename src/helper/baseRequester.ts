@@ -21,7 +21,7 @@ export default class BaseRequester {
     const headers = await AuthHelper.getRequestHeaders(options, siteUrl);
     
     // Create the rest API URL
-    const restUrl = `${siteUrl}/_api/web/tenantappcatalog/AvailableApps/GetById('${pkgId}')/${action}`;
+    const restUrl = `${siteUrl}/_api/web/${useAppCatalog ? "tenantappcatalog" : "SiteCollectionAppCatalog"}/AvailableApps/GetById('${pkgId}')/${action}`;
 
     // Create body
     let body = null;
@@ -30,6 +30,8 @@ export default class BaseRequester {
     }
 
     return new Promise<boolean>((resolve, reject) => {
+      Logger.info(`Calling the following API: ${restUrl}`);
+      
       request.post(restUrl, { headers, body }, (err, resp, body) => {
         // Check if there was an error
         if (err) {
